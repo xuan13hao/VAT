@@ -149,8 +149,8 @@
 
 ## Troubleshooting
 
-- **Memory Allocation Issues**:
-  Ensure sufficient memory is available when processing large files. Use smaller chunks (`--chunks`) to reduce memory usage.
+<!-- - **Memory Allocation Issues**:
+  Ensure sufficient memory is available when processing large files. Use smaller chunks (`--chunks`) to reduce memory usage. -->
 - **Database Type Errors**:
   Specify `--dbtype` as `nucl` or `prot` when creating a database.
 - **Alignment Errors**:
