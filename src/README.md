@@ -70,7 +70,7 @@
 | `--ungapped_score`     | Minimum raw alignment score to continue local extension (default: 0).                       |
 | `--band`               | Band size for dynamic programming computation (default: 8).                                 |
 | `--num_shapes`         | Number of seed shapes to use (default: 0 = all available).                                  |
-| `--ra`                 | Reduced alphabet (options: `murphy.10`, `MMSEQS12`, `td.10`; default: `MMSEQS12`).          |
+| `--ra`                 | Reduced alphabet (options: `murphy.10`, `MMSEQS12`, `td.10`; default: `null`).             |
 | `--out2pro`            | Output file for DNA-to-protein conversion (default: `out2pro.fa`).                          |
 | `--for_only`           | Enable alignment only on the forward strand.                                                |
 
@@ -87,7 +87,7 @@
 
 2. **Run DNA alignment**:
     ```bash
-    VAT dna -d mydb.vatf -q test_reads.fa -a alignment_output -p 4
+    VAT dna -d mydb.vatf -q test_reads.fa -a alignment_output
     ```
 
 3. **View the results**:
@@ -114,6 +114,26 @@
     ```bash
     VAT view -a protein_alignment.vatr -o protein_alignment
     vim protein_alignment
+    ```
+
+---
+
+### BLASTX Alignment
+
+1. **Create a protein database**:
+    ```bash
+    VAT makevatdb --dbtype prot --in protein_ref.fa -d protein_db
+    ```
+
+2. **Run BLASTX alignment**:
+    ```bash
+    VAT blastx -d protein_db.vatf -q dna_reads.fa -a blastx_output
+    ```
+
+3. **View the results**:
+    ```bash
+    VAT view -a blastx_output.vatr -o blastx_output
+    vim blastx_output
     ```
 
 ---
@@ -148,8 +168,8 @@
 
 Use `--outfmt` to specify the desired output format.
 
-<!-- --- -->
-<!-- 
+<!-- ---
+
 ## Citation
 
 If you use **VATAligner** in your research, please cite: -->
