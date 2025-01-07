@@ -1,13 +1,15 @@
 # VATAligner
 
-**VATAligner** (Versatile Alignment Tool) is a high-performance, multi-purpose tool designed for DNA and protein sequence alignments. It provides various options for efficient mapping, supporting both short and long nucleotide sequences and protein homology searches.
+**VATAligner** (Versatile Alignment Tool) is a high-performance, multi-purpose tool designed for DNA and protein sequence alignments. It supports a wide range of alignment tasks, including nucleotide and protein database creation, homology searches, splice alignments, and whole-genome sequencing.
 
 ---
 
 ## Features
-- **Fast and efficient**: Multi-threading capabilities for large-scale data processing.
-- **Versatile**: Supports DNA and protein alignments.
-- **Flexible**: Fine-tune parameters for maximum control over the alignment process.
+
+- **Fast and Efficient**: Multi-threaded support for large-scale data processing.
+- **Versatile**: DNA and protein sequence alignment with advanced options.
+- **Flexible**: Fine-tune parameters to customize alignment for specific applications.
+- **Comprehensive Options**: Supports chimera alignment, circular DNA alignment, splice alignments, and more.
 
 ---
 
@@ -22,21 +24,26 @@
 | `-a`, `--vaa`         | VAT alignment archive (vatr) file.           |
 | `--dbtype`            | Database type: `nucl` (nucleotide) or `prot` (protein). |
 
+---
+
 ### Makedb Options
 | Option              | Description                                      |
 |---------------------|--------------------------------------------------|
 | `-i`, `--in`        | Input reference file in FASTA format.            |
+
+---
 
 ### Aligner Options
 | Option                   | Description                                                                                  |
 |--------------------------|----------------------------------------------------------------------------------------------|
 | `-q`, `--query`           | Input query file.                                                                            |
 | `-k`, `--maxtarget_seqs`  | Maximum number of target sequences to report (default: 25).                                  |
+| `--top`                   | Report alignments within the top percentage range of alignment scores (default: 100).         |
 | `-e`, `--evalue`          | Maximum e-value to report (default: 0.001).                                                  |
 | `--min_score`             | Minimum bit score to report alignments (default: 0).                                         |
 | `--report_id`             | Minimum identity percentage to report alignments (default: 0).                               |
-| `--gapopen`               | Gap opening penalty (default: -1, which corresponds to 11 for protein).                      |
-| `--gapextend`             | Gap extension penalty (default: -1, which corresponds to 1 for protein).                     |
+| `--gapopen`               | Gap opening penalty (default: -1; maps to 11 for protein).                                   |
+| `--gapextend`             | Gap extension penalty (default: -1; maps to 1 for protein).                                  |
 | `-S`, `--seed_len`        | Seed length (default: 15 for DNA, 8 for protein).                                            |
 | `--match`                 | Match score (default: 5).                                                                    |
 | `--mismatch`              | Mismatch score (default: -4).                                                                |
@@ -50,21 +57,24 @@
 | `--avx2`                  | Enable AVX2 hamming distance calculations.                                                   |
 | `--matrix`                | Specify scoring matrix for protein alignment (default: `blosum62`).                          |
 
-### Advanced Options
-| Option                  | Description                                                                                   |
-|-------------------------|-----------------------------------------------------------------------------------------------|
-| `-M`, `--max_seeds`     | Maximum number of hits to consider for one seed (default: 0).                                 |
-| `-W`, `--window`        | Window size for local hit search (default: 0).                                                |
-| `-w`, `--minimizer`     | Window size for minimizer (default: 10).                                                      |
-| `--xdrop`               | X-drop threshold for ungapped alignment (default: 18).                                        |
-| `-X`, `--gapped_xdrop`  | X-drop threshold for gapped alignment in bits (default: 18).                                  |
-| `--ungapped_score`      | Minimum raw alignment score to continue local extension (default: 0).                         |
-| `--pre_score`           | Minimum score to keep a pre-alignment (default: 0).                                           |
-| `--band`                | Band size for dynamic programming computation (default: 8).                                   |
-| `-N`, `--num_shapes`    | Number of seed shapes to use (default: 0, which means all available).                         |
-| `--ra`                  | Reduced alphabet options (`murphy.10`, `MMSEQS12`, or `td.10`) (default: `MMSEQS12`).         |
-| `--for_only`            | Enable alignment only on the forward strand.                                                  |
+---
 
+### Advanced Options
+| Option                | Description                                                                                |
+|-----------------------|--------------------------------------------------------------------------------------------|
+| `--max_seeds`          | Maximum number of hits to consider for a seed (default: 0).                                |
+| `--window`             | Window size for local hit search (default: 0).                                             |
+| `--minimizer`          | Window size for minimizer (default: 10).                                                   |
+| `--xdrop`              | X-drop threshold for ungapped alignment (default: 18).                                      |
+| `-X`, `--gapped_xdrop` | X-drop threshold for gapped alignment in bits (default: 18).                                |
+| `--ungapped_score`     | Minimum raw alignment score to continue local extension (default: 0).                       |
+| `--band`               | Band size for dynamic programming computation (default: 8).                                 |
+| `--num_shapes`         | Number of seed shapes to use (default: 0 = all available).                                  |
+| `--ra`                 | Reduced alphabet (options: `murphy.10`, `MMSEQS12`, `td.10`; default: `MMSEQS12`).          |
+| `--out2pro`            | Output file for DNA-to-protein conversion (default: `out2pro.fa`).                          |
+| `--for_only`           | Enable alignment only on the forward strand.                                                |
+
+---
 
 ## Example Usage
 
@@ -77,12 +87,12 @@
 
 2. **Run DNA alignment**:
     ```bash
-    VAT dna -d mydb.vatf -q test_reads.fa -a alignment_output
+    VAT dna -d mydb.vatf -q test_reads.fa -a alignment_output -p 4
     ```
 
 3. **View the results**:
     ```bash
-    VAT view -a alignment_output -o alignment_output
+    VAT view -a alignment_output.vatr -o alignment_output
     vim alignment_output
     ```
 
@@ -97,24 +107,50 @@
 
 2. **Run protein alignment**:
     ```bash
-    VAT protein -d protein_db -q protein_test.fa -a protein_alignment -p 4
+    VAT protein -d protein_db.vatf -q protein_test.fa -a protein_alignment -p 4
     ```
 
 3. **View the results**:
     ```bash
-    VAT view -a protein_alignment -o protein_alignment
+    VAT view -a protein_alignment.vatr -o protein_alignment
     vim protein_alignment
     ```
 
 ---
 
-## Additional Information
+### DNA-to-Protein Conversion
 
-- **Error Handling**:
-  - Ensure that sufficient memory is allocated when processing large datasets.
-  - Use the `--threads` option to optimize performance.
+1. **Convert DNA to protein**:
+    ```bash
+    VAT dna2pro --query dna_sequence.fa --out2pro protein_output.fa
+    ```
 
-- **Output Formats**:
-  - Alignment results can be saved in `tab`, `sam`, or `paf` formats by specifying `--outfmt` in the command.
+---
 
-For further assistance, refer to the documentation or contact the VAT development team.
+## Troubleshooting
+
+- **Memory Allocation Issues**:
+  Ensure sufficient memory is available when processing large files. Use smaller chunks (`--chunks`) to reduce memory usage.
+- **Database Type Errors**:
+  Specify `--dbtype` as `nucl` or `prot` when creating a database.
+- **Alignment Errors**:
+  Check input formats (`FASTA`/`FASTQ`) and ensure query and database files are compatible.
+
+---
+
+## Output Formats
+
+| Format | Description                               |
+|--------|-------------------------------------------|
+| `tab`  | Tab-delimited summary of alignments.      |
+| `sam`  | Sequence Alignment/Map format.            |
+| `paf`  | Pairwise Alignment Format for long reads. |
+
+Use `--outfmt` to specify the desired output format.
+
+<!-- --- -->
+<!-- 
+## Citation
+
+If you use **VATAligner** in your research, please cite: -->
+
