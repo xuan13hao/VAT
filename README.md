@@ -1,5 +1,5 @@
 # Versatile Alignment Tool 
-![visitor badge](https://visitor-badge.glitch.me/badge?repo_id=xuan13hao/VAT)
+![visitors](https://shields.io/badge/visitors-dynamic-green)
 
 **VATAligner** (Versatile Alignment Tool) is a fast and efficient multi-purpose sequence aligner. It supports the alignment of both short and long nucleotide sequences, as well as protein homology searches, offering a flexible solution for various sequence analysis needs.
 
