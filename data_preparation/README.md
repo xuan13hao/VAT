@@ -1,7 +1,22 @@
 # Benchmark Data Preparation 
 ## Protein query and target datasets generation from Pfam for benchmark
 The process to generate target.fasta and query.fasta from Pfam-A.fa involves two main steps. First, we randomly select a specific number of sequences from a large input FASTA file, such as the Pfam-A database, while imposing a limit on the number of sequences from the same Pfam family. This ensures diversity in the selected sequences by preventing any single family from dominating the dataset. The selected sequences are written to a new FASTA file, which serves as the basis for further analysis. In the second step, we split these selected sequences into two distinct files: a query set and a search database. A specified number of sequences are randomly chosen as query sequences and written to the query.fasta file. The remaining sequences are compiled into the target.fasta file, which will serve as the search database. 
+### Protein on real dataset on NR database
+```
+wget -nc ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR187/005/ERR1873275/ERR1873275_1.fastq.gz
+wget -nc ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR187/005/ERR1873275/ERR1873275_2.fastq.gz
+wget -nc ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR187/001/ERR1873331/ERR1873331_1.fastq.gz
+wget -nc ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR187/001/ERR1873331/ERR1873331_2.fastq.gz
 
+```
+## DNA homology searching on real dataset on NT database
+```
+wget -nc ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR187/004/ERR1877934/ERR1877934_2.fastq.gz
+wget -nc ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR187/004/ERR1877934/ERR1877934_1.fastq.gz
+wget -nc ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR187/003/ERR1877793/ERR1877793_1.fastq.gz
+wget -nc ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR187/003/ERR1877793/ERR1877793_2.fastq.gz
+
+```
 ## Short genomic datasets generation for benchmark
 In the short-read genomic simulation study, Mason2 was employed to generate synthetic genomic reads extracted from a reference genome. Mason2 is a read simulator tool designed to replicate the sequencing process, allowing researchers to simulate short-read datasets with realistic sequencing errors, which are useful for benchmarking and testing various genomic tools. In this study, Mason2 was particularly useful for producing datasets with controlled characteristics, such as read length and sequencing error rates. The generated reads, formatted in the standard FASTQ format, are suitable for use as input in a wide range of short-read alignment tools, facilitating fair comparisons between them. For consistency, most of the synthetic datasets were extracted from the human genome (GRCh38), with Mason2 allowing for the generation of reads of different lengths and quantities as required for the study's objectives. By adjusting parameters such as the number of reads and the lengths of the sequences, Mason2 ensured that the simulated datasets were tailored to specific experimental conditions, https://github.com/seqan/seqan/blob/main/apps/mason2/README.mason_simulator.
 
@@ -113,4 +128,38 @@ In our study, we used a benchmark method based on the MUMmer4 genome alignment s
 ```
 ftp://ftp.ensembl.org/pub/release-94/fasta/homo_sapiens/dna/, human, GRCh38
 www.ncbi.nlm.nih.gov/datasets/genome/GCA_000001515.4/, chimpanzee
+```
+
+## circRNA Datasets
+
+### Simulated Dataset
+```
+date 
+wget https://hgdownload.soe.ucsc.edu/goldenPath/hg19/database/refGene.txt.gz && gunzip refGene.txt.gz && mv refGene.txt hg19.txt
+
+grep -vf non_canon_chrs.txt hg19.txt > tmp.txt && rm hg19.txt && mv tmp.txt hg19.txt
+
+wget http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/genePredToGtf
+
+chmod 777 ./genePredToGtf
+
+cut -f2-11 hg19.txt | ./genePredToGtf file stdin hg19.gtf
+
+# # sort to match fasta file chr10, chr11, chr12 etc etc..
+sort -k1 -n hg19.gtf > tmp.gtf && rm hg19.gtf && mv tmp.gtf hg19.gtf
+sort -k3 -n hg19.txt > tmp.txt && rm hg19.txt && mv tmp.txt hg19.txt
+
+perl ./CIRIsimulator.pl -1 pos1_1.fastq -2 pos1_2.fastq -O pos_circRNA.list -G hg19.gtf -DB ./hela_hg19_circRNA.txt -C 10 -LC 0 -R 1 -LR 1 -L 101 -E 1 -I 350 -D /home/h392x566/VAT_Benchmark/nucl_benchmark/circRNA_detection_review/simu/hg/ucsc -CHR1 0 -M 50 && \
+gzip pos1_1.fastq pos1_2.fastq 
+
+```
+### Real Dataset
+```
+/path/to/software/fastq-dump --split-files --gzip -O /path/to/fastq/outdir /path/to/SRR1636985.sra 
+mv /path/to/fastq/outdir/SRR1636985_1.fastq.gz /path/to/fastq/outdir/SRR1636985-raw_1.fastq.gz 
+mv /path/to/fastq/outdir/SRR1636985_2.fastq.gz /path/to/fastq/outdir/SRR1636985-raw_2.fastq.gz 
+
+/path/to/software/fastq-dump --split-files --gzip -O /path/to/fastq/outdir /path/to/SRR1636986.sra 
+mv /path/to/fastq/outdir/SRR1636986_1.fastq.gz /path/to/fastq/outdir/SRR1636986-raw_1.fastq.gz 
+mv /path/to/fastq/outdir/SRR1636986_2.fastq.gz /path/to/fastq/outdir/SRR1636986-raw_2.fastq.gz 
 ```
