@@ -134,7 +134,7 @@ www.ncbi.nlm.nih.gov/datasets/genome/GCA_000001515.4/, chimpanzee
 
 ### Simulated Dataset
 ```
-date 
+
 wget https://hgdownload.soe.ucsc.edu/goldenPath/hg19/database/refGene.txt.gz && gunzip refGene.txt.gz && mv refGene.txt hg19.txt
 
 grep -vf non_canon_chrs.txt hg19.txt > tmp.txt && rm hg19.txt && mv tmp.txt hg19.txt

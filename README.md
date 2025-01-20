@@ -2,13 +2,13 @@
 ![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https://github.com/xuan13hao/VAT&count_bg=%2379C83D&title_bg=%23555555&icon=github.svg&icon_color=%23E7E7E7&title=hits&edge_flat=true)
 
 **VATAligner** (Versatile Alignment Tool) is a fast and efficient multi-purpose sequence aligner. It supports the alignment of both short and long nucleotide sequences, as well as protein homology searches, offering a flexible solution for various sequence analysis needs.
-
+<!-- 
 ## Prerequisites
 Required for zlib and Boost
 ```console
 dnf install zlib zlib-devel
 dnf install boost-devel
-```
+``` -->
 
 ## Features
 - Supports both DNA and protein sequence alignments.
