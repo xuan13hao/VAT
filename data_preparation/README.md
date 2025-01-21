@@ -123,7 +123,7 @@ wgsim -1 100 -2 100 -N mibcrobial.fna mibcrobial.r1.fq mibcrobial.r2.fq
 cat mibcrobial.r1.fq mibcrobial.r2.fq> mibcrobial.fq
 ```
 ### Real Dataset
-The HG002 genome dataset, sequenced using PacBio HiFi-10kb CCS technology, features highly accurate long reads (~10kb) with 33X coverage, ideal for SNPs, indels, and structural variation detection. HiFi reads achieve over 99.9% accuracy (Q30+), providing reliable data for benchmarking genome assembly and haplotype phasing. 
+The HG002 genome dataset, sequenced using PacBio HiFi-10kb CCS technology, features highly accurate long reads (~10kb) with 33X coverage, ideal for SNPs, indels, and structural variation detection. HiFi reads achieve over 99.9% accuracy, providing reliable data for benchmarking genome assembly and haplotype phasing. 
 ```
 wget https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/giab/data/AshkenazimTrio/HG002_NA24385_son/PacBio_CCS_10kb/m54238_180629_191119.Q20.fastq
 ```
