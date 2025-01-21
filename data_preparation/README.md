@@ -116,16 +116,15 @@ pbsim-1.0.3-Linux-amd64/Linux-amd64/bin/pbsim \
 transcriptome_hg38.fa
 ```
 ## Chimeric datasets generation for benchmark
+### Simulated Dataset
 We simulated silico sequencing data for the benchmark experiment. We selected 18 microbial reference genomes  and used wgsim to generate two independent 50bp fragments and concatenated them together. We also inserted random bases (2-5bp) at the chimera junction to simulate potential crosslink artifacts and an error rate of 0.1% (Q30). 
 ```
 wgsim -1 100 -2 100 -N mibcrobial.fna mibcrobial.r1.fq mibcrobial.r2.fq
 cat mibcrobial.r1.fq mibcrobial.r2.fq> mibcrobial.fq
 ```
 ### Real Dataset
-Sequencing datasets of HG002 genome
+The HG002 genome dataset, sequenced using PacBio HiFi-10kb CCS technology, features highly accurate long reads (~10kb) with 33X coverage, ideal for SNPs, indels, and structural variation detection. HiFi reads achieve over 99.9% accuracy (Q30+), providing reliable data for benchmarking genome assembly and haplotype phasing. 
 ```
-HiFi-10kb	CCS	~33X	10kb
-
 wget https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/giab/data/AshkenazimTrio/HG002_NA24385_son/PacBio_CCS_10kb/m54238_180629_191119.Q20.fastq
 ```
 ## Whole-Genome Alignment for benchmark
