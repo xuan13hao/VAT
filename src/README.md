@@ -168,7 +168,7 @@
 | `sam`  | Sequence Alignment/Map format.            |
 | `paf`  | Pairwise Alignment Format for long reads. |
 
-Use `--outfmt` to specify the desired output format.
+Use `-f` to specify the desired output format.
 
 <!-- ---
 
