@@ -54,6 +54,7 @@
 | `--wgs`                   | Enable whole-genome sequencing.                                                              |
 | `--splice`                | Enable splice alignments.                                                                    |
 | `--dnah`                  | Enable DNA homology search.                                                                  |
+| `--rna`                   | Enable RNA homology search.                                                                  |
 | `--avx2`                  | Enable AVX2 hamming distance calculations.                                                   |
 | `--hifi`                  | Enable PacBio HiFi/CCS genomic reads.                                                   |
 | `--matrix`                | Specify scoring matrix for protein alignment (default: `blosum62`).                          |
@@ -93,7 +94,7 @@
 
 3. **View the results**:
     ```bash
-    VAT view -a alignment_output.vatr -o alignment_output
+    VAT view -a alignment_output.vatr -f sam/paf/tab -o alignment_output
     vim alignment_output
     ```
 
@@ -113,7 +114,7 @@
 
 3. **View the results**:
     ```bash
-    VAT view -a protein_alignment.vatr -o protein_alignment
+    VAT view -a protein_alignment.vatr -f sam/paf/tab -o protein_alignment
     vim protein_alignment
     ```
 
