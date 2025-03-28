@@ -134,7 +134,7 @@
 
 3. **View the results**:
     ```bash
-    VAT view -a blastx_output.vatr -o blastx_output
+    VAT view -a blastx_output.vatr -f sam/paf/tab -o blastx_output
     vim blastx_output
     ```
 
