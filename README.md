@@ -30,3 +30,16 @@ For information on data preparation and access, please refer to the [data_prepar
 
 For a list of available options and command-line flags, refer to the detailed documentation in the [src/README.md](src/README.md) file.
 
+## Pre-built Container (Apptainer/Singularity)
+
+A ready-to-use container image is available for quick use:
+
+[![Download SIF](https://img.shields.io/badge/Download%20SIF-Figshare-blue?logo=apptainer)](https://doi.org/10.6084/m9.figshare.29506208)
+
+🔗 **Direct download**:  
+[`VATAligner.sif`](https://figshare.com/ndownloader/files/56068652)
+
+```bash
+# Download and run with Apptainer/Singularity
+wget https://figshare.com/ndownloader/files/56068652 -O VATAligner.sif
+apptainer exec VATAligner.sif VAT --help
