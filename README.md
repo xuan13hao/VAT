@@ -40,6 +40,4 @@ A ready-to-use container image is available for quick use:
 [`VATAligner.sif`](https://figshare.com/ndownloader/files/56068652)
 
 ```bash
-# Download and run with Apptainer/Singularity
-wget https://figshare.com/ndownloader/files/56068652 -O VATAligner.sif
 apptainer exec VATAligner.sif VAT --help
