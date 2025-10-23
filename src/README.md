@@ -57,7 +57,7 @@
 | `--avx2`                  | Enable AVX2 hamming distance calculations.                                                   |
 | `--hifi`                  | Enable PacBio HiFi/CCS genomic reads.                                                   |
 | `--matrix`                | Specify scoring matrix for protein alignment (default: `blosum62`).                          |
-
+| `--SEN`                | Enable sensitive protein alignment.                          |
 ---
 
 ### Advanced Options
