@@ -37,7 +37,7 @@ A ready-to-use container image is available for quick use:
 [![Download SIF](https://img.shields.io/badge/Download%20SIF-Figshare-blue?logo=apptainer)](https://doi.org/10.6084/m9.figshare.29506208)
 
 🔗 **Direct download**:  
-[`VAT.sif`](https://figshare.com/ndownloader/files/58998610)
+[`VAT.sif`](https://figshare.com/ndownloader/files/59000968)
 
 ```bash
 apptainer exec VAT.sif VAT --help
