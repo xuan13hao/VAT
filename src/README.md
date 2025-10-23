@@ -40,7 +40,6 @@
 | `-k`, `--maxtarget_seqs`  | Maximum number of target sequences to report (default: 25).                                  |
 | `--top`                   | Report alignments within the top percentage range of alignment scores (default: 100).         |
 | `-e`, `--evalue`          | Maximum e-value to report (default: 0.001).                                                  |
-| `--min_score`             | Minimum bit score to report alignments (default: 0).                                         |
 | `--report_id`             | Minimum identity percentage to report alignments (default: 0).                               |
 | `--gapopen`               | Gap opening penalty (default: -1; maps to 11 for protein).                                   |
 | `--gapextend`             | Gap extension penalty (default: -1; maps to 1 for protein).                                  |
@@ -64,15 +63,11 @@
 ### Advanced Options
 | Option                | Description                                                                                |
 |-----------------------|--------------------------------------------------------------------------------------------|
-| `--max_seeds`          | Maximum number of hits to consider for a seed (default: 0).                                |
-| `--window`             | Window size for local hit search (default: 0).                                             |
-| `--minimizer`          | Window size for minimizer (default: 10).                                                   |
 | `--xdrop`              | X-drop threshold for ungapped alignment (default: 18).                                      |
 | `-X`, `--gapped_xdrop` | X-drop threshold for gapped alignment in bits (default: 18).                                |
 | `--ungapped_score`     | Minimum raw alignment score to continue local extension (default: 0).                       |
 | `--band`               | Band size for dynamic programming computation (default: 8).                                 |
 | `--num_shapes`         | Number of seed shapes to use (default: 0 = all available).                                  |
-| `--ra`                 | Reduced alphabet (options: `murphy.10`, `MMSEQS12`, `td.10`; default: `null`).             |
 | `--out2pro`            | Output file for DNA-to-protein conversion (default: `out2pro.fa`).                          |
 | `--for_only`           | Enable alignment only on the forward strand.                                                |
 
