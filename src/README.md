@@ -167,6 +167,7 @@
 | `tab`  | Tab-delimited summary of alignments.      |
 | `sam`  | Sequence Alignment/Map format.            |
 | `paf`  | Pairwise Alignment Format for long reads. |
+| `pairwise` | **BLAST-style pairwise alignment format**, a human-readable output emulating NCBI BLAST, showing alignment scores, identities, and E-values. Ideal for visual inspection of homology alignments. |
 
 Use `-f` to specify the desired output format.
 
