@@ -82,7 +82,7 @@
 
 2. **Run DNA alignment**:
     ```bash
-    VAT dna -d mydb.vatf -q test_reads.fa -a alignment_output
+    VAT dna -d mydb.vatf -q test_reads.fa -f sam/paf/tab -o alignment_output
     ```
 
 3. **View the results**:
@@ -102,10 +102,10 @@
 
 2. **Run protein alignment**:
     ```bash
-    VAT protein -d protein_db.vatf -q protein_test.fa -a protein_alignment -p 4
+    VAT protein -d protein_db.vatf -q protein_test.fa -o protein_alignment -p 4 -f sam/paf/tab
     ```
 
-3. **View the results**:
+3. **View the results (optional)**:
     ```bash
     VAT view -a protein_alignment.vatr -f sam/paf/tab -o protein_alignment
     vim protein_alignment
@@ -122,10 +122,10 @@
 
 2. **Run BLASTX alignment**:
     ```bash
-    VAT blastx -d protein_db.vatf -q dna_reads.fa -a blastx_output
+    VAT blastx -d protein_db.vatf -q dna_reads.fa -o blastx_output -f sam/paf/tab
     ```
 
-3. **View the results**:
+3. **View the results (optional)**:
     ```bash
     VAT view -a blastx_output.vatr -f sam/paf/tab -o blastx_output
     vim blastx_output
