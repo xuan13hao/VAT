@@ -30,7 +30,7 @@ For information on data preparation and access, please refer to the [data_prepar
 
 For a list of available options and command-line flags, refer to the detailed documentation in the [src/README.md](src/README.md) file.
 
-## Pre-built Container (Apptainer/Singularity)
+<!-- ## Pre-built Container (Apptainer/Singularity)
 
 A ready-to-use container image is available for quick use:
 
@@ -41,4 +41,4 @@ A ready-to-use container image is available for quick use:
 
 ```bash
 apptainer exec VAT.sif VAT --help
-apptainer shell --no-home VAT.sif
+apptainer shell --no-home VAT.sif -->
