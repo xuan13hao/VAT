@@ -1,6 +1,6 @@
 # VATAligner
 
-**VATAligner** (Versatile Alignment Tool) is a high-performance, multi-purpose tool designed for DNA and protein sequence alignments. It supports a wide range of alignment tasks, including nucleotide and protein database creation, homology searches, splice alignments, and whole-genome sequencing.
+**VATAligner** (Versatile Alignment Tool) is a high-performance, multi-purpose tool designed for DNA and protein sequence alignments. It supports a wide range of alignment tasks, including nucleotide and protein database creation, homology searches, split alignments, and whole-genome sequencing.
 
 ---
 
@@ -75,72 +75,41 @@
 
 ### DNA Alignment
 
-1. **Create a nucleotide database**:
-    ```bash
-    VAT makevatdb --dbtype nucl --in test_all.fa -d mydb
-    ```
+```bash
+# Build database first
+VAT makevatdb --in genome.fa --dbtype nucl
 
-2. **Run DNA alignment**:
-    ```bash
-    VAT dna -d mydb.vatf -q test_reads.fa -f sam/paf/tab -o alignment_output
-    ```
-
-3. **View the results**:
-    ```bash
-    VAT view -a alignment_output.vatr -f sam/paf/tab -o alignment_output
-    vim alignment_output
-    ```
-
----
+# Align
+VAT dna -d genome.fa -q query.fa -o output.vaa -f tab -p 8
+```
 
 ### Protein Alignment
 
-1. **Create a protein database**:
-    ```bash
-    VAT makevatdb --dbtype prot --in protein_ref.fa -d protein_db
-    ```
+```bash
+# Build database
+VAT makevatdb --in proteins.fa --dbtype prot
 
-2. **Run protein alignment**:
-    ```bash
-    VAT protein -d protein_db.vatf -q protein_test.fa -o protein_alignment -p 4 -f sam/paf/tab
-    ```
-
-3. **View the results (optional)**:
-    ```bash
-    VAT view -a protein_alignment.vatr -f sam/paf/tab -o protein_alignment
-    vim protein_alignment
-    ```
-
----
+# Align
+VAT protein -d proteins.fa -q queries.fa -o output -f tab -p 8
+```
+ 
 
 ### BLASTX Alignment
 
-1. **Create a protein database**:
-    ```bash
-    VAT makevatdb --dbtype prot --in protein_ref.fa -d protein_db
-    ```
+Translate DNA query against protein database
+```bash
+# Align
+VAT blastx -d proteins.fa -q dna_query.fa -o output.txt -f tab -p 8
+```
 
-2. **Run BLASTX alignment**:
-    ```bash
-    VAT blastx -d protein_db.vatf -q dna_reads.fa -o blastx_output -f sam/paf/tab
-    ```
-
-3. **View the results (optional)**:
-    ```bash
-    VAT view -a blastx_output.vatr -f sam/paf/tab -o blastx_output
-    vim blastx_output
-    ```
-
----
 
 ### DNA-to-Protein Conversion
 
-1. **Convert DNA to protein**:
-    ```bash
-    VAT dna2pro --query dna_sequence.fa --out2pro protein_output.fa
-    ```
+Convert DNA to protein:
+```bash
+VAT dna2pro --query dna_sequence.fa --out2pro protein_output.fa
+```
 
----
 
 ## Troubleshooting
 
