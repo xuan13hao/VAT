@@ -46,7 +46,6 @@
 | `-S`, `--seed_len`        | Seed length (default: 15 for DNA, 8 for protein).                                            |
 | `--match`                 | Match score (default: 5).                                                                    |
 | `--mismatch`              | Mismatch score (default: -4).                                                                |
-| `--simd_sort`             | Enable SIMD (AVX2) sorting for double-indexing.                                              |
 | `--chimera`               | Enable chimera alignment.                                                                    |
 | `--circ`                  | Enable circular alignment.                                                                   |
 | `--wga`                   | Enable whole-genome alignment.                                                               |
