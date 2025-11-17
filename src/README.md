@@ -51,6 +51,7 @@
 | `--wga`                   | Enable whole-genome alignment.                                                               |
 | `--wgs`                   | Enable whole-genome sequencing.                                                              |
 | `--hifi`                  | Enable PacBio HiFi/CCS genomic reads.                                                              |
+| `--long`                  | Enable long reads.                                                              |
 | `--splice`                | Enable splice alignments.                                                                    |
 | `--dnah`                  | Enable DNA homology search.                                                                  |
 | `--avx2`                  | Enable AVX2 hamming distance calculations.                                                   |
