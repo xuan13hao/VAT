@@ -62,7 +62,6 @@
 |-----------------------|--------------------------------------------------------------------------------------------|
 | `--xdrop`              | X-drop threshold for ungapped alignment (default: 18).                                      |
 | `-X`, `--gapped_xdrop` | X-drop threshold for gapped alignment in bits (default: 18).                                |
-| `--ungapped_score`     | Minimum raw alignment score to continue local extension (default: 0).                       |
 | `--band`               | Band size for dynamic programming computation (default: 8).                                 |
 | `--num_shapes`         | Number of seed shapes to use (default: 0 = all available).                                  |
 | `--out2pro`            | Output file for DNA-to-protein conversion (default: `out2pro.fa`).                          |
