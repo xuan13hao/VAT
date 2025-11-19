@@ -80,7 +80,7 @@
 VAT makevatdb --in genome.fa --dbtype nucl
 
 # Align
-VAT dna -d genome.fa -q query.fa -o output.vaa -f tab -p 8
+VAT dna -d genome.fa -q query.fa -o output.txt -f tab -p 8
 ```
 
 ### Protein Alignment
@@ -90,7 +90,7 @@ VAT dna -d genome.fa -q query.fa -o output.vaa -f tab -p 8
 VAT makevatdb --in proteins.fa --dbtype prot
 
 # Align
-VAT protein -d proteins.fa -q queries.fa -o output -f tab -p 8
+VAT protein -d proteins.fa -q queries.fa -o output.txt -f tab -p 8
 ```
  
 
