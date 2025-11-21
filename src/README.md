@@ -37,8 +37,8 @@
 | Option                   | Description                                                                                  |
 |--------------------------|----------------------------------------------------------------------------------------------|
 | `-q`, `--query`           | Input query file.                                                                            |
-| `-k`, `--maxtarget_seqs`  | Maximum number of target sequences to report (default: 25).                                  |
-| `--top`                   | Report alignments within the top percentage range of alignment scores (default: 100).         |
+| `-k`, `--maxtarget_seqs`  | Maximum number of target sequences to report (default: 30).                                  |
+| `--top`                   | Report alignments within the top percentage range of alignment scores (default: 98).         |
 | `-e`, `--evalue`          | Maximum e-value to report (default: 0.001).                                                  |
 | `--report_id`             | Minimum identity percentage to report alignments (default: 0).                               |
 | `--gapopen`               | Gap opening penalty (default: -1; maps to 11 for protein).                                   |
