@@ -1,141 +1,155 @@
-# VATAligner
+# VAT Aligner 
 
-**VATAligner** (Versatile Alignment Tool) is a high-performance, multi-purpose tool designed for DNA and protein sequence alignments. It supports a wide range of alignment tasks, including nucleotide and protein database creation, homology searches, split alignments, and whole-genome sequencing.
+## Overview
 
+VAT (Versatile Alignment Tool) is a high-performance sequence alignment tool supporting multiple alignment modes for DNA and protein sequences.
+
+### Build
+```bash
+mkdir -p build && cd build
+cmake ..
+make -j8
+```
+
+## Commands
+
+### makevatdb
+Build VAT database from FASTA file
+```bash
+VAT makevatdb --in <input.fa> --dbtype nucl/prot
+```
+- Creates `<input.fa.vatf>` database file
+
+### dna
+DNA sequence alignment with various modes
+
+### protein
+Protein sequence alignment
+
+### blastx
+Translate DNA query against protein database
+
+### dna2pro
+Convert DNA to protein
+
+### view
+View VAT alignment archive (vaa) formatted file
+
+## DNA Alignment Modes
+
+### 1. WGS Mode (Whole Genome Sequencing)
+High-performance alignment for whole genome sequencing data. Supports both short and long reads.
+
+**Usage:**
+```bash
+./VAT makevatdb --in reference.fa --dbtype nucl
+
+./VAT dna -d reference.fa -q reads.fa --wgs -o output.sam -f sam
+
+./VAT dna -d reference.fa -q long_reads.fa --wgs --long -o output.sam -f sam
+
+./VAT dna -d reference.fa -q reads.fa --wgs -S 15 -o output.sam -f sam
+```
+**Parameters:**
+- `--wgs`: Enable whole genome sequencing mode
+- `--long`: Enable long read mode (default: short reads)
+- `-S, --seed_len`: K-mer size (default: 15)
 ---
 
-## Features
+### 2. Splice Alignment Mode
+RNA-seq splice-aware alignment for detecting intron-exon boundaries and alternative splicing.
 
-- **Fast and Efficient**: Multi-threaded support for large-scale data processing.
-- **Versatile**: DNA and protein sequence alignment with advanced options.
-- **Flexible**: Fine-tune parameters to customize alignment for specific applications.
-- **Comprehensive Options**: Supports chimera alignment, circular DNA alignment, splice alignments, and more.
+**Usage:**
+```bash
+./VAT makevatdb --in reference.fa --dbtype nucl
 
+./VAT dna -d reference.fa -q rna_reads.fa --splice -o output.sam -f sam
+
+./VAT dna -d reference.fa -q long_rna_reads.fa --splice --long -o output.sam -f sam
+```
+**Parameters:**
+- `--splice`: Enable splice-aware alignment
+- `--long`: Enable long read mode for RNA-seq
+- `-S, --seed_len`: K-mer size for alignment
 ---
 
-## Command-line Options
+### 3. Circular RNA Mode
+Detects circular RNA (circRNA) structures with back-spliced junctions.
+
+**Usage:**
+```bash
+./VAT dna -d reference.fa -q rna_reads.fa --circ -o output.sam -f sam
+```
+### 4. DNA Homology Mode
+Alignment mode optimized for detecting homologous sequences with evolutionary relationships.
+
+**Usage:**
+```bash
+./VAT dna -d reference.fa -q query.fa --dnah -o output.tab -f tab
+```
+
+### 5. Whole Genome Alignment (WGA)
+Whole genome alignment mode.
+
+**Usage:**
+```bash
+./VAT dna -d reference.fa -q query.fa --wga -a output
+./VAT view -a output.vatr -o output.tab -f tab
+```
+---
+
+### 6. Metagenomic Mode
+Metagenomic sequencing data analysis.
+
+**Usage:**
+```bash
+./VAT dna -d reference.fa -q metagenomic_reads.fa --metagenomic -o output.tab -f tab
+```
+
+## Protein Alignment
+
+### Standard Protein Alignment
+```bash
+./VAT makevatdb --in proteins.fa --dbtype prot
+
+./VAT protein -d proteins.fa -q queries.fa -o output.tab -f tab -p 8
+```
+
+## Blastx Mode
+
+Translate DNA query sequences and align against protein database.
+
+**Usage:**
+```bash
+./VAT makevatdb --in proteins.fa --dbtype prot
+
+
+./VAT blastx -d proteins.fa -q dna_query.fa -a output -p 8
+
+./VAT view -a output.vatr -o output.tab -f tab
+```
+## Common Parameters
 
 ### General Options
-| Option               | Description                                   |
-|----------------------|-----------------------------------------------|
-| `-h`, `--help`        | Show help message.                           |
-| `-p`, `--threads`     | Number of CPU threads (default: 4).          |
-| `-d`, `--db`          | Specify the database file.                   |
-| `-a`, `--vaa`         | VAT alignment archive (vatr) file.           |
-| `--dbtype`            | Database type: `nucl` (nucleotide) or `prot` (protein). |
+- `-p, --threads`: Number of CPU threads (default: 4)
+- `-d, --db`: Database file
+- `-q, --query`: Query file
+- `-o, --out`: Output file
+- `-a, --vaa`: Archive (vatr) file
+- `-f, --outfmt`: Output format (tab/sam/paf/pairwise, default: tab)
 
----
-
-### Makedb Options
-| Option              | Description                                      |
-|---------------------|--------------------------------------------------|
-| `-i`, `--in`        | Input reference file in FASTA format.            |
-
----
-
-### Aligner Options
-| Option                   | Description                                                                                  |
-|--------------------------|----------------------------------------------------------------------------------------------|
-| `-q`, `--query`           | Input query file.                                                                            |
-| `-k`, `--maxtarget_seqs`  | Maximum number of target sequences to report (default: 30).                                  |
-| `--top`                   | Report alignments within the top percentage range of alignment scores (default: 98).         |
-| `-e`, `--evalue`          | Maximum e-value to report (default: 0.001).                                                  |
-| `--report_id`             | Minimum identity percentage to report alignments (default: 0).                               |
-| `--gapopen`               | Gap opening penalty (default: -1; maps to 11 for protein).                                   |
-| `--gapextend`             | Gap extension penalty (default: -1; maps to 1 for protein).                                  |
-| `-S`, `--seed_len`        | Seed length (default: 15 for DNA, 8 for protein).                                            |
-| `--match`                 | Match score (default: 5).                                                                    |
-| `--mismatch`              | Mismatch score (default: -4).                                                                |
-| `--chimera`               | Enable chimera alignment.                                                                    |
-| `--circ`                  | Enable circular alignment.                                                                   |
-| `--wga`                   | Enable whole-genome alignment.                                                               |
-| `--wgs`                   | Enable whole-genome sequencing.                                                              |
-| `--hifi`                  | Enable PacBio HiFi/CCS genomic reads.                                                              |
-| `--long`                  | Enable long reads.                                                              |
-| `--splice`                | Enable splice alignments.                                                                    |
-| `--dnah`                  | Enable DNA homology search.                                                                  |
-| `--avx2`                  | Enable AVX2 hamming distance calculations.                                                   |
-| `--matrix`                | Specify scoring matrix for protein alignment (default: `blosum62`).                          |
-| `--SEN`                | Enable sensitive protein alignment.                          |
----
+### Alignment Options
+- `-S, --seed_len`: Seed length (default: 16 for DNA, 8 for protein)
+- `--match`: Match score (default: 5)
+- `--mismatch`: Mismatch penalty (default: -4)
+- `--gapopen`: Gap open penalty
+- `--gapextend`: Gap extension penalty
+- `-e, --evalue`: Maximum e-value (default: 0.001)
+- `-k, --maxtarget_seqs`: Maximum target sequences (default: 25)
+- `--report_id`: Minimum identity% to report (default: 0)
 
 ### Advanced Options
-| Option                | Description                                                                                |
-|-----------------------|--------------------------------------------------------------------------------------------|
-| `--xdrop`              | X-drop threshold for ungapped alignment (default: 18).                                      |
-| `-X`, `--gapped_xdrop` | X-drop threshold for gapped alignment in bits (default: 18).                                |
-| `--band`               | Band size for dynamic programming computation (default: 8).                                 |
-| `--num_shapes`         | Number of seed shapes to use (default: 0 = all available).                                  |
-| `--out2pro`            | Output file for DNA-to-protein conversion (default: `out2pro.fa`).                          |
-| `--for_only`           | Enable alignment only on the forward strand.                                                |
-
+- `--xdrop`: X-drop for ungapped alignment (default: 18)
+- `-X, --gapped_xdrop`: X-drop for gapped alignment (default: 18)
+- `-N, --num_shapes`: Number of seed shapes (0 = all available, for protein)
 ---
-
-## Example Usage
-
-### DNA Alignment
-
-```bash
-# Build database first
-VAT makevatdb --in genome.fa --dbtype nucl
-
-# Align
-VAT dna -d genome.fa -q query.fa -o output.txt -f tab -p 8
-```
-
-### Protein Alignment
-
-```bash
-# Build database
-VAT makevatdb --in proteins.fa --dbtype prot
-
-# Align
-VAT protein -d proteins.fa -q queries.fa -o output.txt -f tab -p 8
-```
- 
-
-### BLASTX Alignment
-
-Translate DNA query against protein database
-```bash
-# Align
-VAT blastx -d proteins.fa -q dna_query.fa -o output.txt -f tab -p 8
-```
-
-
-### DNA-to-Protein Conversion
-
-Convert DNA to protein:
-```bash
-VAT dna2pro --query dna_sequence.fa --out2pro protein_output.fa
-```
-
-
-## Troubleshooting
-
-<!-- - **Memory Allocation Issues**:
-  Ensure sufficient memory is available when processing large files. Use smaller chunks (`--chunks`) to reduce memory usage. -->
-- **Database Type Errors**:
-  Specify `--dbtype` as `nucl` or `prot` when creating a database.
-- **Alignment Errors**:
-  Check input formats (`FASTA`/`FASTQ`) and ensure query and database files are compatible.
-
----
-
-## Output Formats
-
-| Format | Description                               |
-|--------|-------------------------------------------|
-| `tab`  | Tab-delimited summary of alignments.      |
-| `sam`  | Sequence Alignment/Map format.            |
-| `paf`  | Pairwise Alignment Format for long reads. |
-| `pairwise` | **BLAST-style pairwise alignment format**, a human-readable output emulating NCBI BLAST, showing alignment scores, identities, and E-values. Ideal for visual inspection of homology alignments. |
-
-Use `-f` to specify the desired output format.
-
-<!-- ---
-
-## Citation
-
-If you use **VATAligner** in your research, please cite: -->
-
