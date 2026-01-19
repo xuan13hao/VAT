@@ -44,7 +44,7 @@ High-performance alignment for whole genome sequencing data. Supports both short
 ```bash
 ./VAT makevatdb --in reference.fa --dbtype nucl
 
-./VAT dna -d reference.fa -q reads.fa --wgs -o output.sam -f sam
+./VAT dna -d reference.fa -q reads.fa --wgs -o output.sam -f sam -p 8
 
 ./VAT dna -d reference.fa -q long_reads.fa --wgs --long -o output.sam -f sam
 
@@ -63,7 +63,7 @@ RNA-seq splice-aware alignment for detecting intron-exon boundaries and alternat
 ```bash
 ./VAT makevatdb --in reference.fa --dbtype nucl
 
-./VAT dna -d reference.fa -q rna_reads.fa --splice -o output.sam -f sam
+./VAT dna -d reference.fa -q rna_reads.fa --splice -o output.sam -f sam -p 8
 
 ./VAT dna -d reference.fa -q long_rna_reads.fa --splice --long -o output.sam -f sam
 ```
@@ -78,14 +78,14 @@ Detects circular RNA (circRNA) structures with back-spliced junctions.
 
 **Usage:**
 ```bash
-./VAT dna -d reference.fa -q rna_reads.fa --circ -o output.sam -f sam
+./VAT dna -d reference.fa -q rna_reads.fa --circ -o output.sam -f sam -p 8
 ```
 ### 4. DNA Homology Mode
 Alignment mode optimized for detecting homologous sequences with evolutionary relationships.
 
 **Usage:**
 ```bash
-./VAT dna -d reference.fa -q query.fa --dnah -o output.tab -f tab
+./VAT dna -d reference.fa -q query.fa --dnah -o output.tab -f tab -p 8
 ```
 
 ### 5. Whole Genome Alignment (WGA)
@@ -93,7 +93,7 @@ Whole genome alignment mode.
 
 **Usage:**
 ```bash
-./VAT dna -d reference.fa -q query.fa --wga -a output
+./VAT dna -d reference.fa -q query.fa --wga -a output -p 32
 ./VAT view -a output.vatr -o output.tab -f tab
 ```
 ---
@@ -103,7 +103,7 @@ Metagenomic sequencing data analysis.
 
 **Usage:**
 ```bash
-./VAT dna -d reference.fa -q metagenomic_reads.fa --metagenomic -o output.tab -f tab
+./VAT dna -d reference.fa -q metagenomic_reads.fa --metagenomic -o output.tab -f tab -p 8
 ```
 
 ## Protein Alignment
