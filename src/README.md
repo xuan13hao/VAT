@@ -4,13 +4,6 @@
 
 VAT (Versatile Alignment Tool) is a high-performance sequence alignment tool supporting multiple alignment modes for DNA and protein sequences.
 
-### Build
-```bash
-mkdir -p build && cd build
-cmake ..
-make -j8
-```
-
 ## Commands
 
 ### makevatdb
