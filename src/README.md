@@ -116,7 +116,6 @@ Translate DNA query sequences and align against protein database.
 ```bash
 ./VAT makevatdb --in proteins.fa --dbtype prot
 
-
 ./VAT blastx -d proteins.fa -q dna_query.fa -a output -p 8
 
 ./VAT view -a output.vatr -o output.tab -f tab
