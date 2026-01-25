@@ -4,6 +4,22 @@
 
 
 **VATAligner** (Versatile Alignment Tool) is a fast and efficient multi-purpose sequence aligner. It supports the alignment of both short and long nucleotide sequences, as well as protein homology searches, offering a flexible solution for various sequence analysis needs.
+
+## Requirements
+
+**VAT requires hardware support for AVX2 (Advanced Vector Extensions 2)**. AVX2 is a CPU instruction set extension that enables high-performance vectorized operations, which VAT uses to accelerate sequence alignment.
+
+To check if your system supports AVX2:
+```bash
+# On Linux
+grep -o 'avx2' /proc/cpuinfo | head -1
+
+# Or check CPU flags
+lscpu | grep -i avx2
+```
+
+Most modern CPUs (Intel Haswell and later, AMD Excavator and later) support AVX2. If AVX2 is not available, VAT will not run.
+
 <!-- 
 ## Prerequisites
 Required for zlib and Boost
