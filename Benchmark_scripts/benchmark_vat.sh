@@ -118,8 +118,8 @@ for rep in $(seq 1 "${REPEATS}"); do
   blastx_out="${blastx_prefix}.vatr"
   blastx_tab="${blastx_prefix}.tab"
 
-  time_run "blastx" "${rep}" "${PROT_DB}" "${DNA_QUERY}" "${blastx_out}" "blastx_rep${rep}" \
-    "${VAT_BIN}" blastx -d "${PROT_DB}" -q "${DNA_QUERY}" -o "${blastx_prefix}" -p "${THREADS} -f tab"
+  time_run "blastx" "${rep}" "${PROT_DB}" "${DNA_QUERY}" "${blastx_tab}" "blastx_rep${rep}" \
+    "${VAT_BIN}" blastx -d "${PROT_DB}" -q "${DNA_QUERY}" -o "${blastx_tab}" -f tab -p "${THREADS}"
 
   # time_run "blastx_view" "${rep}" "${PROT_DB}" "${DNA_QUERY}" "${blastx_tab}" "blastx_view_rep${rep}" \
   #   "${VAT_BIN}" view -a "${blastx_out}" -o "${blastx_tab}" -f tab
