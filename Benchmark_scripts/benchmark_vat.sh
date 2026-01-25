@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Benchmark VAT speed (wall time + CPU user/sys time) for:
+# Benchmark VAT speed (wall time) for:
 # - DNA WGS mode
 # - Protein alignment
 # - blastx (including VAT view conversion)
@@ -9,7 +9,7 @@ set -euo pipefail
 #
 # Output:
 #   benchmark_out/<timestamp>/results.tsv
-#   benchmark_out/<timestamp>/*.time.txt (raw /usr/bin/time output per run)
+#   benchmark_out/<timestamp>/*.time.txt (raw time output per run)
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 VAT_BIN="${VAT_BIN:-${ROOT_DIR}/bin/VAT}"
@@ -41,7 +41,7 @@ for f in "${DNA_REF}" "${DNA_QUERY}" "${DNA_LONG_QUERY}" "${PROT_DB}" "${PROT_QU
   fi
 done
 
-TIME_FMT=$'wall_sec\tcpu_user_sec\tcpu_sys_sec'
+TIME_FMT=$'wall_sec'
 
 RESULTS_TSV="${OUT_DIR}/results.tsv"
 echo -e "run_id\tmode\trep\tthreads\tdb\tquery\tout\t${TIME_FMT}" > "${RESULTS_TSV}"
@@ -55,16 +55,17 @@ time_run() {
   local label="$1"; shift
 
   local time_file="${OUT_DIR}/${label}.time.txt"
-  # Use /usr/bin/time to capture consistent metrics in TSV-friendly format.
-  # - elapsed wall seconds (%e)
-  # - user CPU seconds (%U)
-  # - sys CPU seconds (%S)
-  local tsv
-  tsv="$(/usr/bin/time -f $'%e\t%U\t%S' -o "${time_file}" -- "$@")" || true
-  # Note: /usr/bin/time writes to -o file, not stdout.
-
+  # Use bash built-in time to capture wall time in TSV-friendly format.
+  # TIMEFORMAT: %R = elapsed wall seconds
+  local TIMEFORMAT=$'%R'
+  local time_output
+  time_output="$( (time "$@") 2>&1 )" || true
+  
+  # Extract the time metrics (last line from time output)
   local metrics
-  metrics="$(cat "${time_file}")"
+  metrics="$(echo "${time_output}" | tail -n 1)"
+  echo "${metrics}" > "${time_file}"
+
   echo -e "${RUN_ID}\t${mode}\t${rep}\t${THREADS}\t${db}\t${query}\t${out}\t${metrics}" >> "${RESULTS_TSV}"
 }
 
@@ -81,15 +82,15 @@ echo
 DNA_VATF="${DNA_REF}.vatf"
 if [[ ! -f "${DNA_VATF}" ]]; then
   echo "Building DNA VAT DB: ${DNA_REF} -> ${DNA_VATF}"
-  /usr/bin/time -f $'index_wall_sec\t%U\t%S' -o "${OUT_DIR}/index_dna.time.txt" \
-    "${VAT_BIN}" makevatdb --in "${DNA_REF}" --dbtype nucl -p "${THREADS}"
+  TIMEFORMAT=$'%R'
+  (time "${VAT_BIN}" makevatdb --in "${DNA_REF}" --dbtype nucl -p "${THREADS}") 2> "${OUT_DIR}/index_dna.time.txt"
 fi
 
 PROT_VATF="${PROT_DB}.vatf"
 if [[ ! -f "${PROT_VATF}" ]]; then
   echo "Building Protein VAT DB: ${PROT_DB} -> ${PROT_VATF}"
-  /usr/bin/time -f $'index_wall_sec\t%U\t%S' -o "${OUT_DIR}/index_prot.time.txt" \
-    "${VAT_BIN}" makevatdb --in "${PROT_DB}" --dbtype prot -p "${THREADS}"
+  TIMEFORMAT=$'%R'
+  (time "${VAT_BIN}" makevatdb --in "${PROT_DB}" --dbtype prot -p "${THREADS}") 2> "${OUT_DIR}/index_prot.time.txt"
 fi
 
 #############################################
@@ -118,10 +119,10 @@ for rep in $(seq 1 "${REPEATS}"); do
   blastx_tab="${blastx_prefix}.tab"
 
   time_run "blastx" "${rep}" "${PROT_DB}" "${DNA_QUERY}" "${blastx_out}" "blastx_rep${rep}" \
-    "${VAT_BIN}" blastx -d "${PROT_DB}" -q "${DNA_QUERY}" -a "${blastx_prefix}" -p "${THREADS}"
+    "${VAT_BIN}" blastx -d "${PROT_DB}" -q "${DNA_QUERY}" -o "${blastx_prefix}" -p "${THREADS} -f tab"
 
-  time_run "blastx_view" "${rep}" "${PROT_DB}" "${DNA_QUERY}" "${blastx_tab}" "blastx_view_rep${rep}" \
-    "${VAT_BIN}" view -a "${blastx_out}" -o "${blastx_tab}" -f tab
+  # time_run "blastx_view" "${rep}" "${PROT_DB}" "${DNA_QUERY}" "${blastx_tab}" "blastx_view_rep${rep}" \
+  #   "${VAT_BIN}" view -a "${blastx_out}" -o "${blastx_tab}" -f tab
 done
 
 echo
