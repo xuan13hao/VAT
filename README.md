@@ -57,6 +57,12 @@ cd Benchmark_scripts
 bash benchmark_vat.sh
 ```
 
+## Citation
+
+If you use VAT in your research, please cite:
+
+Hao Xuan, Hongyang Sun, Xiangtao Liu, Hanyuan Zhang, Jun Zhang, Cuncong Zhong. A general and extensible algorithmic framework to biological sequence alignment across scales and applications. *bioRxiv* 2026.01.28.702355; doi: [https://doi.org/10.64898/2026.01.28.702355](https://doi.org/10.64898/2026.01.28.702355)
+
 <!-- ## Pre-built Container (Apptainer/Singularity)
 
 A ready-to-use container image is available for quick use:
