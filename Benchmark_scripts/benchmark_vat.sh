@@ -18,8 +18,8 @@ REPEATS="${REPEATS:-1}"
 
 DNA_REF="${DNA_REF:-${ROOT_DIR}/test_case/genome/chr19_GL949746v1_alt.fa}"
 DNA_QUERY="${DNA_QUERY:-${ROOT_DIR}/test_case/DNA/test_reads.fq}"
-DNA_LONG_QUERY="${DNA_LONG_QUERY:-${ROOT_DIR}/test_case/DNA/test_long_reads.fq}"
-
+DNA_LONG_QUERY="${DNA_LONG_QUERY:-${ROOT_DIR}/test_case/DNA/2x_long_read.fq.gz}"
+DNA_LONG_QUERY_TEST="${DNA_LONG_QUERY_TEST:-${ROOT_DIR}/test_case/DNA/test_long_reads.fq}"
 PROT_DB="${PROT_DB:-${ROOT_DIR}/test_case/genome/Pfam_subset.fa}"
 PROT_QUERY="${PROT_QUERY:-${ROOT_DIR}/test_case/Protein/pro_test.fa}"
 
@@ -34,7 +34,7 @@ if [[ ! -x "${VAT_BIN}" ]]; then
   exit 1
 fi
 
-for f in "${DNA_REF}" "${DNA_QUERY}" "${DNA_LONG_QUERY}" "${PROT_DB}" "${PROT_QUERY}"; do
+for f in "${DNA_REF}" "${DNA_QUERY}" "${DNA_LONG_QUERY}" "${DNA_LONG_QUERY_TEST}" "${PROT_DB}" "${PROT_QUERY}"; do
   if [[ ! -f "${f}" ]]; then
     echo "ERROR: required input not found: ${f}" >&2
     exit 1
@@ -107,6 +107,11 @@ for rep in $(seq 1 "${REPEATS}"); do
   wgs_long_out="${OUT_DIR}/wgs_long.rep${rep}.sam"
   time_run "wgs_long" "${rep}" "${DNA_REF}" "${DNA_LONG_QUERY}" "${wgs_long_out}" "wgs_long_rep${rep}" \
     "${VAT_BIN}" dna -d "${DNA_REF}" -q "${DNA_LONG_QUERY}" --wgs --long -o "${wgs_long_out}" -f sam -p "${THREADS}"
+
+  # WGS long-read (test_long_reads.fq)
+  wgs_long_test_out="${OUT_DIR}/wgs_long_test.rep${rep}.sam"
+  time_run "wgs_long_test" "${rep}" "${DNA_REF}" "${DNA_LONG_QUERY_TEST}" "${wgs_long_test_out}" "wgs_long_test_rep${rep}" \
+    "${VAT_BIN}" dna -d "${DNA_REF}" -q "${DNA_LONG_QUERY_TEST}" -o "${wgs_long_test_out}" -f sam -p "${THREADS}"
 
   # Protein
   prot_out="${OUT_DIR}/protein.rep${rep}.tab"
