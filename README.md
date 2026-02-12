@@ -5,6 +5,7 @@
 
 **VATAligner** (Versatile Alignment Tool) is a fast and efficient multi-purpose sequence aligner. It supports the alignment of both short and long nucleotide sequences, as well as protein homology searches, offering a flexible solution for various sequence analysis needs.
 
+
 ## Requirements
 
 **VAT requires hardware support for AVX2 (Advanced Vector Extensions 2)**. AVX2 is a CPU instruction set extension that enables high-performance vectorized operations, which VAT uses to accelerate sequence alignment.
@@ -56,6 +57,8 @@ cd VAT
 cd Benchmark_scripts
 bash benchmark_vat.sh
 ```
+## Single-cell RNA-sequencing analysis pipeline
+**scVAT**: An nf-core single-cell RNA-sequencing analysis pipeline supporting both short and long reads (https://github.com/xuan13hao/scVAT).
 
 ## Citation
 
