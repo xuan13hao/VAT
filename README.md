@@ -57,11 +57,11 @@ cd VAT
 cd Benchmark_scripts
 bash benchmark_vat.sh
 ```
-## Single-cell RNA-sequencing analysis pipeline
+<!-- ## Single-cell RNA-sequencing analysis pipeline
 **scVAT**: An nf-core single-cell RNA-sequencing analysis pipeline supporting both short and long reads (https://github.com/xuan13hao/scVAT).
 
 ## Metagenomic taxonomic classification pipeline
-**taxprofilerVAT** (formerly nf-core/taxprofiler) is a bioinformatics best-practice analysis pipeline for taxonomic classification and profiling of shotgun short- and long-read metagenomic data ([https://github.com/xuan13hao/taxprofilerVAT](https://github.com/xuan13hao/taxprofilerVAT)).
+**taxprofilerVAT** (formerly nf-core/taxprofiler) is a bioinformatics best-practice analysis pipeline for taxonomic classification and profiling of shotgun short- and long-read metagenomic data ([https://github.com/xuan13hao/taxprofilerVAT](https://github.com/xuan13hao/taxprofilerVAT)). -->
 
 ## Citation
 
