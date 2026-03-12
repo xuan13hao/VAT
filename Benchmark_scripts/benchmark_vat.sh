@@ -117,7 +117,7 @@ for rep in $(seq 1 "${REPEATS}"); do
   # Protein
   prot_out="${OUT_DIR}/protein.rep${rep}.tab"
   time_run "protein" "${rep}" "${PROT_DB}" "${PROT_QUERY}" "${prot_out}" "protein_rep${rep}" \
-    "${VAT_BIN}" protein -d "${PROT_DB}" -q "${PROT_QUERY}" -o "${prot_out}" -f tab -p "${THREADS}"
+    "${VAT_BIN}" protein -d "${PROT_DB}" -q "${PROT_QUERY}" -o "${prot_out}" -N 0 -f tab -p "${THREADS}"
 
   # blastx (archive + view)
   blastx_prefix="${OUT_DIR}/blastx.rep${rep}"
