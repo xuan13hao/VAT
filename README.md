@@ -45,7 +45,7 @@ For information on data preparation and access, please refer to the [data_prepar
 
 ## Help and Options
 
-For a list of available options and command-line flags, refer to the detailed documentation in the [src/README.md](src/README.md) file or [`data_preparation/VATmanual.pdf`](data_preparation/VATmanual.pdf)
+For a list of available options and command-line flags, refer to the detailed documentation in the [src/README.md](src/README.md) file or [`data_preparation/VATmanual.pdf`](data_preparation/VATManual.pdf)
 
 ## Small test (quick benchmark)
 
