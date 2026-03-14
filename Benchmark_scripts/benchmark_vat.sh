@@ -102,7 +102,7 @@ for rep in $(seq 1 "${REPEATS}"); do
   # WGS
   wgs_out="${OUT_DIR}/wgs.rep${rep}.sam"
   time_run "wgs" "${rep}" "${DNA_REF}" "${DNA_QUERY}" "${wgs_out}" "wgs_rep${rep}" \
-    "${VAT_BIN}" dna -d "${DNA_REF}" -q "${DNA_QUERY}" --wgs -o "${wgs_out}" -f sam -p "${THREADS}"
+    "${VAT_BIN}" dna -d "${DNA_REF}" -q "${DNA_QUERY}" --splice -o "${wgs_out}" -f sam -p "${THREADS}"
 
   # WGS long-read
   wgs_long_out="${OUT_DIR}/wgs_long.rep${rep}.sam"
