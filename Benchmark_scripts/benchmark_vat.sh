@@ -2,10 +2,15 @@
 set -euo pipefail
 
 # Benchmark VAT speed (wall time) for:
-# - DNA WGS mode
-# - DNA Metagenomic mode
-# - Protein alignment
-# - blastx (including VAT view conversion)
+# - nucl short WGS
+# - nucl long WGS
+# - nucl short MG (metagenomic)
+# - protein homology fast
+# - blastx homology fast
+#
+# CLI shape (see: VAT -h):
+#   VAT nucl <short|long> <WGS|ChIPseq|...|MG|...|HiFi> -d ... -q ... -o ... -f ...
+#   VAT nucl <wga|homology> null -d ... -q ...
 #
 #
 # Output:
@@ -99,34 +104,35 @@ fi
 #############################################
 
 for rep in $(seq 1 "${REPEATS}"); do
-  # WGS
+  # nucl short WGS
   wgs_out="${OUT_DIR}/wgs.rep${rep}.sam"
   time_run "wgs" "${rep}" "${DNA_REF}" "${DNA_QUERY}" "${wgs_out}" "wgs_rep${rep}" \
-    "${VAT_BIN}" dna -d "${DNA_REF}" -q "${DNA_QUERY}" --splice -o "${wgs_out}" -f sam -p "${THREADS}"
+    "${VAT_BIN}" nucl short WGS -d "${DNA_REF}" -q "${DNA_QUERY}" -o "${wgs_out}" -f sam -p "${THREADS}"
 
-  # WGS long-read
+  # nucl long WGS
   wgs_long_out="${OUT_DIR}/wgs_long.rep${rep}.sam"
   time_run "wgs_long" "${rep}" "${DNA_REF}" "${DNA_LONG_QUERY}" "${wgs_long_out}" "wgs_long_rep${rep}" \
-    "${VAT_BIN}" dna -d "${DNA_REF}" -q "${DNA_LONG_QUERY}" --wgs --long -o "${wgs_long_out}" -f sam -p "${THREADS}"
+    "${VAT_BIN}" nucl long WGS -d "${DNA_REF}" -q "${DNA_LONG_QUERY}" -o "${wgs_long_out}" -f sam -p "${THREADS}"
 
-  # Metagenomic
+  # nucl short MG (metagenomic)
   metagenomic_out="${OUT_DIR}/metagenomic.rep${rep}.tab"
   time_run "metagenomic" "${rep}" "${DNA_REF}" "${DNA_QUERY}" "${metagenomic_out}" "metagenomic_rep${rep}" \
-    "${VAT_BIN}" dna -d "${DNA_REF}" -q "${DNA_QUERY}" --metagenomic -o "${metagenomic_out}" -f sam -p "${THREADS}"
+    "${VAT_BIN}" nucl short MG -d "${DNA_REF}" -q "${DNA_QUERY}" -o "${metagenomic_out}" -f tab -p "${THREADS}"
 
-  # Protein
+  # protein homology fast
   prot_out="${OUT_DIR}/protein.rep${rep}.tab"
   time_run "protein" "${rep}" "${PROT_DB}" "${PROT_QUERY}" "${prot_out}" "protein_rep${rep}" \
-    "${VAT_BIN}" protein -d "${PROT_DB}" -q "${PROT_QUERY}" -o "${prot_out}" -N 0 -f tab -p "${THREADS}"
+    "${VAT_BIN}" protein homology fast -d "${PROT_DB}" -q "${PROT_QUERY}" -o "${prot_out}" -N 0 -f tab -p "${THREADS}"
 
-  # blastx (archive + view)
+  # blastx homology fast
   blastx_prefix="${OUT_DIR}/blastx.rep${rep}"
-  blastx_out="${blastx_prefix}.vatr"
   blastx_tab="${blastx_prefix}.tab"
 
   time_run "blastx" "${rep}" "${PROT_DB}" "${DNA_QUERY}" "${blastx_tab}" "blastx_rep${rep}" \
-    "${VAT_BIN}" blastx -d "${PROT_DB}" -q "${DNA_QUERY}" -o "${blastx_tab}" -f tab -p "${THREADS}"
+    "${VAT_BIN}" blastx homology fast -d "${PROT_DB}" -q "${DNA_QUERY}" -o "${blastx_tab}" -f tab -p "${THREADS}"
 
+  # Optional archive conversion example:
+  # blastx_out="${blastx_prefix}.vatr"
   # time_run "blastx_view" "${rep}" "${PROT_DB}" "${DNA_QUERY}" "${blastx_tab}" "blastx_view_rep${rep}" \
   #   "${VAT_BIN}" view -a "${blastx_out}" -o "${blastx_tab}" -f tab
 done
