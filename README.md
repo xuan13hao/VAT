@@ -39,13 +39,9 @@ dnf install boost-devel
 
 **VATAligner** leverages multi-threading to accelerate the alignment process for large datasets. 
 
-## Data Availability
-
-For information on data preparation and access, please refer to the [data_preparation/README.md](data_preparation/README.md) file.
-
 ## Help and Options
 
-For a list of available options and command-line flags, refer to the detailed documentation in the [`VATmanual.pdf`](VATManual.pdf)
+For a list of available options and command-line flags, refer to the detailed documentation in the [`VATmanual.pdf`](VATmanual.pdf)
 
 ## Small test (quick benchmark)
 
